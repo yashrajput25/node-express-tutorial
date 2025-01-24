@@ -2,27 +2,13 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const app = express();
 
-app.use((req, res, next) => {
-    let body = '';
-    req.on('end', ()=>{
-        const userName = body.split('=')[1];
-    if(userName){
-        req.body = {name: userName}
-    }
-    next();
-    });
+app.use(bodyParser.urlencoded({extended: false}));
 
-    req.on('data', chunk => {
-        body += chunk;
-    });
-    
-});
+app.post('/' ,(req, res, next) => {
+    res.send('<h1>User: ' + req.body.username + '</h1>');
+})
 
-app.use((req, res, next) => {
-
-    if(req.body){
-        return res.send('<h1>User:' +req.body.name + '</h1>')
-    }
+app.get('/',(req, res, next) => {
     res.send(`
         <form method="POST">
             <label for="username">Enter your name:</label>
