@@ -1,21 +1,10 @@
-const express = require('express')
-const bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser')
+const placeRoutes = require('./routes/places-routes')
+
 const app = express();
 
-app.use(bodyParser.urlencoded({extended: false}));
+//middle ware//
 
-app.post('/' ,(req, res, next) => {
-    res.send('<h1>User: ' + req.body.username + '</h1>');
-})
-
-app.get('/',(req, res, next) => {
-    res.send(`
-        <form method="POST">
-            <label for="username">Enter your name:</label>
-            <input type="text" id="username" name="username" required>
-            <button type="submit">Submit</button>
-        </form>
-    `);
-});
-
+app.use('/api/places/',placeRoutes);
 app.listen(5000);
