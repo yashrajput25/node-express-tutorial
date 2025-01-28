@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const express = require('express');
 
 const router = express.Router();
@@ -15,8 +16,24 @@ router.get('/:pid', (req, res, next) => {
     const place = DUMMY_PLACES.find(p=>{
         return p.id === placeID;
     });
-    console.log("Get request in Places");
-    res.json(place);
+    if(!place){
+        const error = new Error("Could not find the place")
+        error.code = 404;
+        next(error);
+    }
+    else{
+        res.json(place);
+    }
+    
 });
+
+router.get("/user/:uid", (req, res, next) => {
+    const userID = req.params.uid;
+    const user = DUMMY_PLACES.find(u => {
+        return u.creator === userID;
+    });
+    res.json(user);
+    
+}) 
 
 module.exports = router;
