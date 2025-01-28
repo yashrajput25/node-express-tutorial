@@ -1,5 +1,6 @@
 const { json } = require('body-parser');
 const express = require('express');
+const HttpError = require('../models/http-error')
 
 const router = express.Router();
 const DUMMY_PLACES = [
@@ -17,9 +18,8 @@ router.get('/:pid', (req, res, next) => {
         return p.id === placeID;
     });
     if(!place){
-        const error = new Error("Could not find the place")
-        error.code = 404;
-        next(error);
+       throw new HttpError("Could not find the place", 404);
+
     }
     else{
         res.json(place);
