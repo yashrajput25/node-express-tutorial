@@ -6,14 +6,7 @@ const router = express.Router();
 
 
 router.get('/:pid', placesController.getPlaceById);
-
-// router.get("/user/:uid", (req, res, next) => {
-//     const userID = req.params.uid;
-//     const user = DUMMY_PLACES.find(u => {
-//         return u.creator === userID;
-//     });
-//     res.json(user);
-    
-// }) 
+router.get('/user/:uid', placesController.getUserById);
+router.post('/', placesController.createPlace)
 
 module.exports = router;

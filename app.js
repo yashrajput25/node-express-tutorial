@@ -1,9 +1,11 @@
 const express = require('express');
-const placeRoutes = require('./routes/places-routes')
+const placeRoutes = require('./routes/places-routes');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 //middle ware//
+app.use(bodyParser.json());
 
 app.use('/api/places/',placeRoutes);
 
