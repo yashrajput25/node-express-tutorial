@@ -56,6 +56,24 @@ const getUserById = (req, res, next) => {
     
 }
 
+const updatePlaceByID = (req, res, next)=>{
+    const placeID = req.params.pid;
+    const {title, creator} = req.body;
+    const updatedPlace = DUMMY_PLACES.find(p=> {
+        return p.id === placeID;
+    })
+    const placeIndex = DUMMY_PLACES.findIndex(p =>{
+        return p.id === placeID;
+    })
+    updatedPlace.title = title;
+    updatedPlace.creator = creator;
+    DUMMY_PLACES[placeIndex] = updatedPlace;
+
+    res.status(200).json({place : updatedPlace})
+
+}
+
 exports.getPlaceById = getPlaceById;
 exports.createPlace = createPlace;
 exports.getUserById = getUserById;
+exports.updatePlaceByID = updatePlaceByID;

@@ -8,5 +8,6 @@ const router = express.Router();
 router.get('/:pid', placesController.getPlaceById);
 router.get('/user/:uid', placesController.getUserById);
 router.post('/', placesController.createPlace)
+router.patch('/:pid', placesController.updatePlaceByID)
 
 module.exports = router;
