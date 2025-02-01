@@ -1,5 +1,6 @@
 const HttpError = require('../models/http-error')
 const { v4: uuidv4 } = require('uuid');
+const {validationResult} = require('express-validator')
 
 
 let DUMMY_PLACES = [
@@ -33,12 +34,18 @@ const getPlaceById =  (req, res, next) => {
 }
 
 const createPlace = (req, res, next)=>{
-    const {id, title, description, coordinates , address, creator } = req.body;
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        console.log(errors);
+        throw new HttpError('Invalid input passed', 422);
+    }
+    const {id, title, description, /*coordinates ,*/ address, creator } = req.body;
     const createdPlace = {
         id: uuidv4(),
         title,
         description,
-        location: coordinates,
+        // location: coordinates,
         address,
         creator
     }
@@ -63,6 +70,12 @@ const getUserById = (req, res, next) => {
 }
 
 const updatePlaceByID = (req, res, next)=>{
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        console.log("You have missed something");
+        throw new HttpError("You have missed something", 404);
+    }
     const placeID = req.params.pid;
     const {title, creator} = req.body;
     const updatedPlace ={ ...DUMMY_PLACES.find(p=> {
